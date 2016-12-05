@@ -1,11 +1,12 @@
 from flask import Flask, render_template, request #this is the request object in Flask, not to be confused with the requests library
 import requests #need this library to call APIs
 
-app = Flask(__name__)
+app = Flask(__name__) # ,static_url_path='')
 
 @app.route('/temperature', methods=['POST'])
 def temperature():
     zipcode = request.form['zip']
+    ## submit = request.form['getadvice']
     # next step is to call the API
     # the response will be 'r'
     r = requests.get('http://api.openweathermap.org/data/2.5/weather?zip='+zipcode+',us&appid=e3a4f9f6b0e0a983ba5b78cb1c724f81')
@@ -17,7 +18,20 @@ def temperature():
     temp_k = float(json_object['main']['temp'])
     # convert temp_k to temperature in Fahrenheit
     temp_f = (temp_k - 273.15) * 1.8 + 32
-    return render_template('temperature.html', temp=temp_f)
+    temp_rounded = round(temp_f, 2)
+
+    city_name = (json_object['name'])
+
+    message = ''
+    # message (this should be a separate function)
+    if temp_rounded <= 45:
+        message == "Feel free to stay inside today. You have everyone's permission."
+    elif temp_rounded >= 85:
+        message == "Make posicle ice cream for all of your friends. You'll be the talk of the town."
+    else:
+        message == "You're one of the lucky ones. Never forget that."
+
+    return render_template('temperature.html', temp=temp_rounded, city=city_name, suggestion=message)
 
 @app.route('/')
 def index():
