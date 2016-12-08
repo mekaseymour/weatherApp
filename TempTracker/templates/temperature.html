@@ -67,6 +67,9 @@
           border-radius: 2px;
           line-height: 28px;
         }
+        #p {
+          display: none;
+        }
       </style>
   </head>
 
@@ -87,15 +90,16 @@
                 <br>
                 <br>
                 <br>
-                <p id="p"></p>
+                <p id="p"> {{ suggestion }} </p>
               </form>
             </div>
         </div>
         <script>
 
           function getAdvice() {
-            document.getElementById('p').innerHTML="You're one of the lucky ones. Never forget that.";
+            document.getElementById("p").style.display="block";
           }
+
 
         </script>
 

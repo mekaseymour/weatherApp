@@ -23,16 +23,18 @@ def temperature():
 
     city_name = (json_object['name'])
 
-    message = ''
-    # message (this should be a separate function)
-    if temp_rounded <= 45:
-        message == "Feel free to stay inside today. You have everyone's permission."
-    elif temp_rounded >= 85:
-        message == "Make posicle ice cream for all of your friends. You'll be the talk of the town."
-    else:
-        message == "You're one of the lucky ones. Never forget that."
+    message = get_message(temp_rounded)
 
     return render_template('temperature.html', temp=temp_rounded, city=city_name, suggestion=message)
+
+def get_message(temp_rounded):
+    if temp_rounded <= 45:
+        return "Stay inside. You have everyone's permission."
+    elif temp_rounded >= 85:
+        return "Try to sweat a lot today. It's good for you."
+    else:
+        return "You're one of the lucky ones. Never forget that."
+
 
 @app.route('/')
 def index():
